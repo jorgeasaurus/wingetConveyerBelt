@@ -1,0 +1,70 @@
+name: WinGet Update Check
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      package_filter:
+        description: 'Comma-separated PackageIdentifiers (e.g., Google.Chrome,Mozilla.Firefox)'
+        required: false
+        type: string
+      skip_submission:
+        description: 'Dry run - detect versions without submitting'
+        required: false
+        type: boolean
+        default: false
+      dry_run:
+        description: 'Alias for skip_submission, for clarity'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: winget-updates
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  check-updates:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install wingetcreate
+        shell: pwsh
+        run: |
+          $ProgressPreference = 'SilentlyContinue'
+          $installDir = "$env:RUNNER_TEMP\wingetcreate"
+          New-Item -Path $installDir -ItemType Directory -Force | Out-Null
+          Invoke-WebRequest -Uri 'https://aka.ms/wingetcreate/latest' -OutFile "$installDir\wingetcreate.exe" -UseBasicParsing
+          echo "$installDir" >> $env:GITHUB_PATH
+
+      - name: Run WinGet Conveyer Belt
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ secrets.WINGET_PAT }}
+        run: |
+          $params = @{ Verbose = $true }
+
+          $filter = '${{ inputs.package_filter }}'
+          if ($filter) {
+              $params['PackageFilter'] = $filter -split ','
+          }
+
+          if ('${{ inputs.skip_submission }}' -eq 'true' -or '${{ inputs.dry_run }}' -eq 'true') {
+              $params['SkipSubmission'] = $true
+          }
+
+          ./src/Invoke-WinGetConveyerBelt.ps1 @params
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: winget-conveyer-belt-logs
+          path: '**/*.log'
+          if-no-files-found: ignore

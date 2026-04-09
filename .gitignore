@@ -1,0 +1,20 @@
+# PowerShell
+*.ps1xml
+*.pssc
+*.cdxml
+
+# IDE
+.vscode/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+output/
+bin/
+obj/
+
+# Logs
+*.log

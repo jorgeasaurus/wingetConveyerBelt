@@ -1,0 +1,70 @@
+{
+  "apps": [
+    {
+      "PackageIdentifier": "Google.Chrome",
+      "Name": "Google Chrome",
+      "VersionDetection": {
+        "Type": "api",
+        "Url": "https://versionhistory.googleapis.com/v1/chrome/platforms/win/channels/stable/versions",
+        "JsonPath": "versions[0].version"
+      },
+      "InstallerUrls": [
+        "https://dl.google.com/chrome/install/GoogleChromeStandaloneEnterprise64.msi",
+        "https://dl.google.com/chrome/install/GoogleChromeStandaloneEnterprise.msi"
+      ]
+    },
+    {
+      "PackageIdentifier": "Mozilla.Firefox",
+      "Name": "Mozilla Firefox",
+      "VersionDetection": {
+        "Type": "api",
+        "Url": "https://product-details.mozilla.org/1.0/firefox_versions.json",
+        "JsonPath": "LATEST_FIREFOX_VERSION"
+      },
+      "InstallerUrls": [
+        "https://download.mozilla.org/?product=firefox-{{version}}-ssl&os=win64&lang=en-US",
+        "https://download.mozilla.org/?product=firefox-{{version}}-ssl&os=win&lang=en-US"
+      ]
+    },
+    {
+      "PackageIdentifier": "VideoLAN.VLC",
+      "Name": "VLC media player",
+      "VersionDetection": {
+        "Type": "web-scrape",
+        "Url": "https://www.videolan.org/vlc/download-windows.html",
+        "Pattern": "VLC\\s+([\\d.]+)"
+      },
+      "InstallerUrls": [
+        "https://download.videolan.org/vlc/{{version}}/win64/vlc-{{version}}-win64.exe",
+        "https://download.videolan.org/vlc/{{version}}/win32/vlc-{{version}}-win32.exe"
+      ]
+    },
+    {
+      "PackageIdentifier": "Notepad++.Notepad++",
+      "Name": "Notepad++",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/notepad-plus-plus/notepad-plus-plus/releases/latest",
+        "JsonPath": "tag_name",
+        "TagPrefix": "v"
+      },
+      "InstallerUrls": [
+        "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v{{version}}/npp.{{version}}.Installer.x64.exe",
+        "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v{{version}}/npp.{{version}}.Installer.exe"
+      ]
+    },
+    {
+      "PackageIdentifier": "Greenshot.Greenshot",
+      "Name": "Greenshot",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/greenshot/greenshot/releases/latest",
+        "JsonPath": "tag_name",
+        "TagPrefix": "Greenshot-RELEASE-"
+      },
+      "InstallerUrls": [
+        "https://github.com/greenshot/greenshot/releases/download/Greenshot-RELEASE-{{version}}/Greenshot-INSTALLER-{{version}}-RELEASE.exe"
+      ]
+    }
+  ]
+}
