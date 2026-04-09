@@ -1,0 +1,59 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Lint: PSScriptAnalyzer",
+			"type": "shell",
+			"command": "pwsh",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"if (-not (Get-Module -ListAvailable PSScriptAnalyzer)) { Install-Module PSScriptAnalyzer -Force -Scope CurrentUser }; $results = Invoke-ScriptAnalyzer -Path ./src -Recurse -Settings ./PSScriptAnalyzerSettings.psd1; $results | Format-Table -AutoSize; if ($results) { exit 1 }"
+			],
+			"group": "test",
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared",
+				"clear": true
+			},
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "Test: Pester",
+			"type": "shell",
+			"command": "pwsh",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"if (-not (Get-Module -ListAvailable Pester)) { Install-Module Pester -Force -Scope CurrentUser -MinimumVersion 5.0 }; Invoke-Pester ./tests/ -Output Detailed -CI"
+			],
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared",
+				"clear": true
+			},
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "Test: Pester (Current File)",
+			"type": "shell",
+			"command": "pwsh",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Invoke-Pester '${file}' -Output Detailed"
+			],
+			"group": "test",
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared",
+				"clear": true
+			},
+			"problemMatcher": "$msCompile"
+		}
+	]
+}
