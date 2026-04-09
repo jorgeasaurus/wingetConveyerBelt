@@ -32,7 +32,7 @@
       "VersionDetection": {
         "Type": "web-scrape",
         "Url": "https://www.videolan.org/vlc/download-windows.html",
-        "Pattern": "VLC\\s+([\\d.]+)"
+        "Pattern": "vlc-([\\d.]+)-win"
       },
       "InstallerUrls": [
         "https://download.videolan.org/vlc/{{version}}/win64/vlc-{{version}}-win64.exe",
@@ -60,10 +60,10 @@
         "Type": "github-release",
         "Url": "https://api.github.com/repos/greenshot/greenshot/releases/latest",
         "JsonPath": "tag_name",
-        "TagPrefix": "Greenshot-RELEASE-"
+        "TagPrefix": "v"
       },
       "InstallerUrls": [
-        "https://github.com/greenshot/greenshot/releases/download/Greenshot-RELEASE-{{version}}/Greenshot-INSTALLER-{{version}}-RELEASE.exe"
+        "https://github.com/greenshot/greenshot/releases/download/v{{version}}/Greenshot-INSTALLER-{{version}}-RELEASE.exe"
       ]
     }
   ]
