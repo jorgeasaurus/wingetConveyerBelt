@@ -65,6 +65,138 @@
       "InstallerUrls": [
         "https://github.com/greenshot/greenshot/releases/download/v{{version}}/Greenshot-INSTALLER-{{version}}-RELEASE.exe"
       ]
+    },
+    {
+      "PackageIdentifier": "Microsoft.PowerToys",
+      "Name": "PowerToys",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/microsoft/PowerToys/releases/latest",
+        "JsonPath": "tag_name",
+        "TagPrefix": "v"
+      },
+      "InstallerUrls": [
+        "https://github.com/microsoft/PowerToys/releases/download/v{{version}}/PowerToysSetup-{{version}}-x64.exe",
+        "https://github.com/microsoft/PowerToys/releases/download/v{{version}}/PowerToysSetup-{{version}}-arm64.exe"
+      ]
+    },
+    {
+      "PackageIdentifier": "OBSProject.OBSStudio",
+      "Name": "OBS Studio",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/obsproject/obs-studio/releases/latest",
+        "JsonPath": "tag_name"
+      },
+      "InstallerUrls": [
+        "https://github.com/obsproject/obs-studio/releases/download/{{version}}/OBS-Studio-{{version}}-Windows-x64-Installer.exe"
+      ]
+    },
+    {
+      "PackageIdentifier": "ShareX.ShareX",
+      "Name": "ShareX",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/ShareX/ShareX/releases/latest",
+        "JsonPath": "tag_name",
+        "TagPrefix": "v"
+      },
+      "InstallerUrls": [
+        "https://github.com/ShareX/ShareX/releases/download/v{{version}}/ShareX-{{version}}-setup.exe"
+      ]
+    },
+    {
+      "PackageIdentifier": "HandBrake.HandBrake",
+      "Name": "HandBrake",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/HandBrake/HandBrake/releases/latest",
+        "JsonPath": "tag_name"
+      },
+      "InstallerUrls": [
+        "https://github.com/HandBrake/HandBrake/releases/download/{{version}}/HandBrake-{{version}}-x86_64-Win_GUI.exe",
+        "https://github.com/HandBrake/HandBrake/releases/download/{{version}}/HandBrake-{{version}}-arm64-Win_GUI.exe"
+      ]
+    },
+    {
+      "PackageIdentifier": "Microsoft.WindowsTerminal",
+      "Name": "Windows Terminal",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/microsoft/terminal/releases/latest",
+        "JsonPath": "tag_name",
+        "TagPrefix": "v"
+      },
+      "InstallerUrls": [
+        "https://github.com/microsoft/terminal/releases/download/v{{version}}/Microsoft.WindowsTerminal_{{version}}_8wekyb3d8bbwe.msixbundle"
+      ]
+    },
+    {
+      "PackageIdentifier": "Brave.Brave",
+      "Name": "Brave Browser",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/brave/brave-browser/releases/latest",
+        "JsonPath": "tag_name",
+        "TagPrefix": "v"
+      },
+      "InstallerUrls": [
+        "https://github.com/brave/brave-browser/releases/download/v{{version}}/BraveBrowserStandaloneSetup.exe",
+        "https://github.com/brave/brave-browser/releases/download/v{{version}}/BraveBrowserStandaloneSetup32.exe"
+      ]
+    },
+    {
+      "PackageIdentifier": "KeePassXCTeam.KeePassXC",
+      "Name": "KeePassXC",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/keepassxreboot/keepassxc/releases/latest",
+        "JsonPath": "tag_name"
+      },
+      "InstallerUrls": [
+        "https://github.com/keepassxreboot/keepassxc/releases/download/{{version}}/KeePassXC-{{version}}-Win64.msi"
+      ]
+    },
+    {
+      "PackageIdentifier": "Telegram.TelegramDesktop",
+      "Name": "Telegram Desktop",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/telegramdesktop/tdesktop/releases/latest",
+        "JsonPath": "tag_name",
+        "TagPrefix": "v"
+      },
+      "InstallerUrls": [
+        "https://github.com/telegramdesktop/tdesktop/releases/download/v{{version}}/tsetup-x64.{{version}}.exe",
+        "https://github.com/telegramdesktop/tdesktop/releases/download/v{{version}}/tsetup.{{version}}.exe"
+      ]
+    },
+    {
+      "PackageIdentifier": "dbeaver.DBeaverCommunity",
+      "Name": "DBeaver Community",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/dbeaver/dbeaver/releases/latest",
+        "JsonPath": "tag_name"
+      },
+      "InstallerUrls": [
+        "https://github.com/dbeaver/dbeaver/releases/download/{{version}}/dbeaver-ce-{{version}}-windows-x86_64.exe",
+        "https://github.com/dbeaver/dbeaver/releases/download/{{version}}/dbeaver-ce-{{version}}-windows-aarch64.exe"
+      ]
+    },
+    {
+      "PackageIdentifier": "Audacity.Audacity",
+      "Name": "Audacity",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/audacity/audacity/releases/latest",
+        "JsonPath": "tag_name",
+        "TagPrefix": "Audacity-"
+      },
+      "InstallerUrls": [
+        "https://github.com/audacity/audacity/releases/download/Audacity-{{version}}/audacity-win-{{version}}-64bit.exe",
+        "https://github.com/audacity/audacity/releases/download/Audacity-{{version}}/audacity-win-{{version}}-32bit.exe"
+      ]
     }
   ]
 }
