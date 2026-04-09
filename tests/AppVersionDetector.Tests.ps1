@@ -78,6 +78,29 @@ Describe 'Get-LatestAppVersion' {
             $result = Get-LatestAppVersion -AppConfig $config
             $result | Should -Be '8.7.1'
         }
+
+        It 'Should apply VersionPattern and VersionFormat when specified' {
+            Mock Invoke-RestMethod {
+                [PSCustomObject]@{
+                    tag_name = 'v1.88.138'
+                    name     = 'Release v1.88.138 (Chromium 146.0.7680.178)'
+                }
+            } -ModuleName 'AppVersionDetector'
+
+            $config = [PSCustomObject]@{
+                Name             = 'Brave Browser'
+                VersionDetection = [PSCustomObject]@{
+                    Type           = 'github-release'
+                    Url            = 'https://api.github.com/repos/brave/brave-browser/releases/latest'
+                    VersionSource  = 'name'
+                    VersionPattern = 'v(?<brave>[\d.]+).*Chromium (?<chromium>\d+)'
+                    VersionFormat  = '{chromium}.{brave}'
+                }
+            }
+
+            $result = Get-LatestAppVersion -AppConfig $config
+            $result | Should -Be '146.1.88.138'
+        }
     }
 
     Context 'When VersionDetection type is web-scrape' {

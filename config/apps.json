@@ -137,9 +137,11 @@
       "VersionDetection": {
         "Type": "github-release",
         "Url": "https://api.github.com/repos/brave/brave-browser/releases/latest",
-        "JsonPath": "tag_name",
-        "TagPrefix": "v"
+        "VersionSource": "name",
+        "VersionPattern": "v(?<brave>[\\d.]+).*Chromium (?<chromium>\\d+)",
+        "VersionFormat": "{chromium}.{brave}"
       },
+      "InstallerVersionExtract": "\\d+\\.(.*)",
       "InstallerUrls": [
         "https://github.com/brave/brave-browser/releases/download/v{{version}}/BraveBrowserStandaloneSetup.exe",
         "https://github.com/brave/brave-browser/releases/download/v{{version}}/BraveBrowserStandaloneSetup32.exe"
@@ -172,7 +174,7 @@
       ]
     },
     {
-      "PackageIdentifier": "dbeaver.DBeaverCommunity",
+      "PackageIdentifier": "DBeaver.DBeaver.Community",
       "Name": "DBeaver Community",
       "VersionDetection": {
         "Type": "github-release",

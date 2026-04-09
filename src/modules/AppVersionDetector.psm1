@@ -60,6 +60,25 @@ function Get-VersionFromGitHubRelease {
     try {
         $response = Invoke-RestMethod -Uri $VersionDetection.Url -Headers $headers -ErrorAction Stop
 
+        # If VersionPattern + VersionFormat are set, extract version from release name
+        if ($VersionDetection.VersionPattern -and $VersionDetection.VersionFormat) {
+            $source = if ($VersionDetection.VersionSource) { $VersionDetection.VersionSource } else { 'name' }
+            $text = Resolve-JsonPath -Object $response -Path $source
+
+            if ($text -match $VersionDetection.VersionPattern) {
+                $version = $VersionDetection.VersionFormat
+                foreach ($key in $Matches.Keys) {
+                    if ($key -is [string]) {
+                        $version = $version -replace "\{$key\}", $Matches[$key]
+                    }
+                }
+                return [string]$version
+            }
+
+            Write-Warning "VersionPattern '$($VersionDetection.VersionPattern)' did not match release text: $text"
+            return $null
+        }
+
         $jsonPath = if ($VersionDetection.JsonPath) { $VersionDetection.JsonPath } else { 'tag_name' }
         $tag = Resolve-JsonPath -Object $response -Path $jsonPath
 
