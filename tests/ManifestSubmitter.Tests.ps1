@@ -32,6 +32,20 @@ Describe 'Resolve-InstallerUrls' {
             $result | Should -Be 'https://example.com/3.5.0/app-3.5.0.exe'
         }
     }
+
+    Context 'When URLs contain {{installerVersion}} placeholders' {
+        It 'Should replace both {{installerVersion}} and {{version}} independently' {
+            $template = 'https://example.com/download/{{installerVersion}}/App-{{version}}-64-bit.exe'
+            $result = Resolve-InstallerUrls -UrlTemplates $template -Version '2.53.0.2' -InstallerVersion 'v2.53.0.windows.2'
+            $result | Should -Be 'https://example.com/download/v2.53.0.windows.2/App-2.53.0.2-64-bit.exe'
+        }
+
+        It 'Should fall back to Version when InstallerVersion is not provided' {
+            $template = 'https://example.com/{{installerVersion}}/setup.exe'
+            $result = Resolve-InstallerUrls -UrlTemplates $template -Version '1.0.0'
+            $result | Should -Be 'https://example.com/1.0.0/setup.exe'
+        }
+    }
 }
 
 Describe 'Submit-WinGetManifest' {

@@ -166,11 +166,11 @@ foreach ($app in $apps) {
 
         # (g) Resolve installer URLs
         $installerVersion = $upstreamVersion
-        if ($app.InstallerVersionExtract -and $upstreamVersion -match $app.InstallerVersionExtract) {
-            $installerVersion = $Matches[1]
-            Write-Verbose "InstallerVersionExtract applied: $upstreamVersion -> $installerVersion"
+        if ($app.InstallerVersionTransform) {
+            $installerVersion = $upstreamVersion -replace $app.InstallerVersionTransform.Pattern, $app.InstallerVersionTransform.Replacement
+            Write-Verbose "InstallerVersionTransform: $upstreamVersion -> $installerVersion"
         }
-        $installerUrls = Resolve-InstallerUrls -UrlTemplates $app.InstallerUrls -Version $installerVersion
+        $installerUrls = Resolve-InstallerUrls -UrlTemplates $app.InstallerUrls -Version $upstreamVersion -InstallerVersion $installerVersion
         Write-Verbose "Resolved installer URLs: $($installerUrls -join ', ')"
 
         # (h) Skip submission if requested

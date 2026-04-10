@@ -141,10 +141,13 @@
         "VersionPattern": "v(?<brave>[\\d.]+).*Chromium (?<chromium>\\d+)",
         "VersionFormat": "{chromium}.{brave}"
       },
-      "InstallerVersionExtract": "\\d+\\.(.*)",
+      "InstallerVersionTransform": {
+        "Pattern": "^\\d+\\.(.*)",
+        "Replacement": "$1"
+      },
       "InstallerUrls": [
-        "https://github.com/brave/brave-browser/releases/download/v{{version}}/BraveBrowserStandaloneSetup.exe",
-        "https://github.com/brave/brave-browser/releases/download/v{{version}}/BraveBrowserStandaloneSetup32.exe"
+        "https://github.com/brave/brave-browser/releases/download/v{{installerVersion}}/BraveBrowserStandaloneSetup.exe",
+        "https://github.com/brave/brave-browser/releases/download/v{{installerVersion}}/BraveBrowserStandaloneSetup32.exe"
       ]
     },
     {
@@ -198,6 +201,70 @@
       "InstallerUrls": [
         "https://github.com/audacity/audacity/releases/download/Audacity-{{version}}/audacity-win-{{version}}-64bit.exe",
         "https://github.com/audacity/audacity/releases/download/Audacity-{{version}}/audacity-win-{{version}}-32bit.exe"
+      ]
+    },
+    {
+      "PackageIdentifier": "Git.Git",
+      "Name": "Git for Windows",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/git-for-windows/git/releases/latest",
+        "VersionSource": "tag_name",
+        "VersionPattern": "v(?<base>[\\d.]+)\\.windows\\.(?<rev>\\d+)",
+        "VersionFormat": "{base}.{rev}"
+      },
+      "InstallerVersionTransform": {
+        "Pattern": "(\\d+\\.\\d+\\.\\d+)\\.(\\d+)",
+        "Replacement": "v$1.windows.$2"
+      },
+      "InstallerUrls": [
+        "https://github.com/git-for-windows/git/releases/download/{{installerVersion}}/Git-{{version}}-64-bit.exe",
+        "https://github.com/git-for-windows/git/releases/download/{{installerVersion}}/Git-{{version}}-32-bit.exe"
+      ]
+    },
+    {
+      "PackageIdentifier": "GitHub.GitHubDesktop",
+      "Name": "GitHub Desktop",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/desktop/desktop/releases/latest",
+        "JsonPath": "tag_name",
+        "TagPrefix": "release-"
+      },
+      "InstallerUrls": [
+        "https://github.com/desktop/desktop/releases/download/release-{{version}}/GitHubDesktopSetup-x64.exe",
+        "https://github.com/desktop/desktop/releases/download/release-{{version}}/GitHubDesktopSetup-x64.msi"
+      ]
+    },
+    {
+      "PackageIdentifier": "7zip.7zip",
+      "Name": "7-Zip",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/ip7z/7zip/releases/latest",
+        "JsonPath": "tag_name"
+      },
+      "InstallerVersionTransform": {
+        "Pattern": "\\.",
+        "Replacement": ""
+      },
+      "InstallerUrls": [
+        "https://github.com/ip7z/7zip/releases/download/{{version}}/7z{{installerVersion}}-x64.exe",
+        "https://github.com/ip7z/7zip/releases/download/{{version}}/7z{{installerVersion}}.exe"
+      ]
+    },
+    {
+      "PackageIdentifier": "dotPDN.PaintDotNet",
+      "Name": "Paint.NET",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/paintdotnet/release/releases/latest",
+        "JsonPath": "tag_name",
+        "TagPrefix": "v"
+      },
+      "InstallerUrls": [
+        "https://github.com/paintdotnet/release/releases/download/v{{version}}/paint.net.{{version}}.install.x64.zip",
+        "https://github.com/paintdotnet/release/releases/download/v{{version}}/paint.net.{{version}}.install.arm64.zip"
       ]
     }
   ]

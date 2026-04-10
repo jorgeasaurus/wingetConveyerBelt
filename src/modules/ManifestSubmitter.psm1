@@ -73,25 +73,26 @@ function Resolve-InstallerUrls {
         Replaces version placeholders in installer URL templates.
 
     .DESCRIPTION
-        Takes an array of URL templates containing {{version}} placeholders
-        and replaces each occurrence with the supplied version string.
+        Takes an array of URL templates containing {{version}} and optionally
+        {{installerVersion}} placeholders and replaces each occurrence with the
+        supplied version strings.
 
     .PARAMETER UrlTemplates
-        One or more URL strings that may contain {{version}} placeholders.
+        One or more URL strings that may contain {{version}} or {{installerVersion}} placeholders.
 
     .PARAMETER Version
-        The version string to substitute into the templates.
+        The WinGet version string to substitute for {{version}}.
+
+    .PARAMETER InstallerVersion
+        Optional transformed version for {{installerVersion}} placeholders.
+        Falls back to Version when not specified.
 
     .EXAMPLE
         Resolve-InstallerUrls -UrlTemplates 'https://example.com/app/{{version}}/setup.exe' -Version '1.2.3'
         # Returns: https://example.com/app/1.2.3/setup.exe
 
     .EXAMPLE
-        $urls = @(
-            'https://cdn.example.com/v{{version}}/installer_x64.exe',
-            'https://cdn.example.com/v{{version}}/installer_arm64.exe'
-        )
-        Resolve-InstallerUrls -UrlTemplates $urls -Version '2.0.0'
+        Resolve-InstallerUrls -UrlTemplates 'https://example.com/{{installerVersion}}/app-{{version}}.exe' -Version '2.53.0.2' -InstallerVersion 'v2.53.0.windows.2'
     #>
     [CmdletBinding()]
     [OutputType([string[]])]
@@ -100,11 +101,17 @@ function Resolve-InstallerUrls {
         [string[]]$UrlTemplates,
 
         [Parameter(Mandatory)]
-        [string]$Version
+        [string]$Version,
+
+        [string]$InstallerVersion
     )
 
+    if (-not $InstallerVersion) {
+        $InstallerVersion = $Version
+    }
+
     [string[]]$resolved = foreach ($template in $UrlTemplates) {
-        $template -replace '\{\{version\}\}', $Version
+        $template -replace '\{\{installerVersion\}\}', $InstallerVersion -replace '\{\{version\}\}', $Version
     }
 
     return $resolved
