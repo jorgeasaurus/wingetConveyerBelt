@@ -127,13 +127,22 @@ foreach ($app in $apps) {
             continue
         }
 
-        Write-Verbose "Upstream version for $name : $upstreamVersion"
+         Write-Verbose "Upstream version for $name : $upstreamVersion"
 
         # Fetch latest WinGet version for reporting
         $wingetVersion = Get-LatestWinGetVersion -PackageIdentifier $id -GitHubToken $GitHubToken
 
         # (c) Check if version already exists in winget-pkgs
+        #     Also normalize for trailing .0 differences (e.g., 7.6.0 vs 7.6.0.0)
         $versionExists = Test-WinGetVersionExists -PackageIdentifier $id -Version $upstreamVersion -GitHubToken $GitHubToken
+
+        if (-not $versionExists -and $wingetVersion) {
+            $normalizeVersion = { param($v) ($v -replace '(\.0)+$', '') }
+            if (& $normalizeVersion $upstreamVersion -eq (& $normalizeVersion $wingetVersion)) {
+                Write-Verbose "$name versions match after normalization ($upstreamVersion ~ $wingetVersion)"
+                $versionExists = $true
+            }
+        }
 
         if ($versionExists) {
             Write-Verbose "$name $upstreamVersion already exists in winget-pkgs."

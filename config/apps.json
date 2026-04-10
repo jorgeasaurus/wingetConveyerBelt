@@ -279,6 +279,20 @@
         "https://update.code.visualstudio.com/{{version}}/win32-x64/stable",
         "https://update.code.visualstudio.com/{{version}}/win32-arm64/stable"
       ]
+    },
+    {
+      "PackageIdentifier": "Microsoft.PowerShell",
+      "Name": "PowerShell",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/PowerShell/PowerShell/releases/latest",
+        "JsonPath": "tag_name",
+        "TagPrefix": "v"
+      },
+      "InstallerUrls": [
+        "https://github.com/PowerShell/PowerShell/releases/download/v{{version}}/PowerShell-{{version}}-win-x64.msi",
+        "https://github.com/PowerShell/PowerShell/releases/download/v{{version}}/PowerShell-{{version}}-win-arm64.msi"
+      ]
     }
   ]
 }
