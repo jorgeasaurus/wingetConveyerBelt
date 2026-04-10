@@ -266,6 +266,19 @@
         "https://github.com/paintdotnet/release/releases/download/v{{version}}/paint.net.{{version}}.install.x64.zip",
         "https://github.com/paintdotnet/release/releases/download/v{{version}}/paint.net.{{version}}.install.arm64.zip"
       ]
+    },
+    {
+      "PackageIdentifier": "Microsoft.VisualStudioCode",
+      "Name": "Visual Studio Code",
+      "VersionDetection": {
+        "Type": "github-release",
+        "Url": "https://api.github.com/repos/microsoft/vscode/releases/latest",
+        "JsonPath": "tag_name"
+      },
+      "InstallerUrls": [
+        "https://update.code.visualstudio.com/{{version}}/win32-x64/stable",
+        "https://update.code.visualstudio.com/{{version}}/win32-arm64/stable"
+      ]
     }
   ]
 }
