@@ -112,7 +112,7 @@ foreach ($app in $apps) {
         $ErrorActionPreference = 'Stop'
 
         # (a) Detect latest upstream version
-        $upstreamVersion = Get-LatestAppVersion -AppConfig $app
+        $upstreamVersion = Get-LatestAppVersion -AppConfig $app -GitHubToken $GitHubToken
 
         if (-not $upstreamVersion) {
             Write-Warning "Could not detect upstream version for $name ($id). Skipping."

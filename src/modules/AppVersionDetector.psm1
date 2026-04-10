@@ -52,10 +52,15 @@ function Get-VersionFromGitHubRelease {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
-        [PSCustomObject]$VersionDetection
+        [PSCustomObject]$VersionDetection,
+
+        [string]$GitHubToken
     )
 
     $headers = @{ 'User-Agent' = 'wingetConveyerBelt/1.0' }
+    if ($GitHubToken) {
+        $headers['Authorization'] = "token $GitHubToken"
+    }
 
     try {
         $response = Invoke-RestMethod -Uri $VersionDetection.Url -Headers $headers -ErrorAction Stop
@@ -151,7 +156,9 @@ function Get-LatestAppVersion {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
-        [PSCustomObject]$AppConfig
+        [PSCustomObject]$AppConfig,
+
+        [string]$GitHubToken
     )
 
     $detection = $AppConfig.VersionDetection
@@ -163,7 +170,7 @@ function Get-LatestAppVersion {
 
     switch ($detection.Type) {
         'api'            { return Get-VersionFromApi            -VersionDetection $detection }
-        'github-release' { return Get-VersionFromGitHubRelease  -VersionDetection $detection }
+        'github-release' { return Get-VersionFromGitHubRelease  -VersionDetection $detection -GitHubToken $GitHubToken }
         'web-scrape'     { return Get-VersionFromWebScrape      -VersionDetection $detection }
         default {
             Write-Warning "Unknown version detection type: '$($detection.Type)' for '$($AppConfig.Name)'"
